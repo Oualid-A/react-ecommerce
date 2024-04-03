@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 const CartFooter = ({total, clearCart}) => {
   return (
@@ -13,8 +14,8 @@ const CartFooter = ({total, clearCart}) => {
       <button onClick={clearCart}
         className="bg-transparent text-black border-2 border-black px-4 py-3 w-full ">Clear
         Cart</button>
-      <button  
-        className="bg-black text-white px-4 py-3 w-full">Checkout</button>
+      <Link  to="/checkout" 
+        className="bg-black text-white flex justify-center px-4 py-3 w-full">Checkout</Link>
     </div>
   </footer>
   )

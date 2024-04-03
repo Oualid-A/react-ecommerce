@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useCart } from "../../contexts/CartContext";
 
 const ProductCard = ({ product }) => {
@@ -19,9 +20,9 @@ const ProductCard = ({ product }) => {
         className="mix-blend-multiply w-auto	self-center m-auto object-contain h-52  rounded-t-lg"
       />
       <div className=" flex flex-col justify-start items-start !mb-14">
-        <div className="font-medium text-xl  text-justify hover:underline hover:cursor-pointer">
+      <Link to={`/details/${product.id}`} className="font-medium text-xl text-justify hover:underline hover:cursor-pointer">
           {product.title}
-        </div>
+        </Link>
         <div className="text-sm">{product.category}</div>
         <div className="font-bold">{product.price} MAD</div>
       </div>
