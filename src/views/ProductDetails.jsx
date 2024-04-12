@@ -1,13 +1,33 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getProductById } from "../services/ProductService";
 import { useParams } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
+import { Alert, Snackbar } from "@mui/material";
 
 const ProductDetails = () => {
   const id = useParams();
   const [product, setProduct] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
+  const [open, setOpen] = useState(false);
+
+  const [state, setState] = React.useState({
+    vertical: "top",
+    horizontal: "center",
+  });
+  const { vertical, horizontal } = state;
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,21 +36,22 @@ const ProductDetails = () => {
     };
     fetchData();
   }, [id.id]);
-  useEffect(()=>console.log("...."))
+
   const incrementQuantity = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
-  
+
   const decrementQuantity = () => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity - 1));
   };
 
   const handleAddToCart = () => {
-    addToCart({...product, quantity: undefined}, quantity); 
+    addToCart({ ...product, quantity: undefined }, quantity);
+    handleClick();
   };
-  
+
   return (
-    <div className="flex flex-col pb-14 bg-white" >
+    <div className="flex flex-col pb-14 bg-white">
       <div className="self-center mt-20 w-full max-w-[1201px] max-md:mt-10 max-md:max-w-full ">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0 ">
           <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full h-auto ">
@@ -116,7 +137,10 @@ const ProductDetails = () => {
                   </div>
                   <div className="flex flex-col items-start space-y-2 ">
                     <div className="w-full space-y-3">
-                      <button  onClick={handleAddToCart}  className="px-4 py-3 rounded-3xl cursor-pointer w-full bg-white border-2 text-black">
+                      <button
+                        onClick={handleAddToCart}
+                        className="px-4 py-3 rounded-3xl cursor-pointer w-full bg-white border-2 text-black"
+                      >
                         Add To Cart
                       </button>
                       <button className="px-4 py-3 rounded-3xl cursor-pointer w-full bg-black text-white">
@@ -133,6 +157,21 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Product added to cart successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

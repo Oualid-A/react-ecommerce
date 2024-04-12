@@ -1,36 +1,41 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { TextField, Button, Box, Typography, Grid } from '@mui/material';
-import PaymentSection from './PaymentSection';
+import { useForm } from "react-hook-form";
+import { TextField, Button, Box, Typography, Grid } from "@mui/material";
+import PaymentSection from "./PaymentSection";
 
 const PayForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     console.log(data);
     alert("Payment has been submitted successfully");
   };
 
   return (
-    <Box component="section" className="border-r-2" sx={{ p: 4, maxWidth: 'lg', mx: 'auto' }}>
+    <Box
+      component="section"
+      className="border-r-2"
+      sx={{ p: 4, maxWidth: "lg", mx: "auto" }}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Typography variant="h6" mb={3} textAlign="center">
-          Express Checkout
-        </Typography>
-        <Typography variant="h5" mb={3}>
-          Contact
-        </Typography>
+        <Typography variant="h5">Contact</Typography>
         <TextField
           fullWidth
           id="email"
           label="Email or mobile phone number"
           variant="outlined"
-          {...register("email", { required: "Email is required", pattern: /^\S+@\S+$/i })}
+          {...register("email", {
+            required: "Email is required",
+            pattern: /^\S+@\S+$/i,
+          })}
           error={Boolean(errors.email)}
           helperText={errors.email?.message}
           margin="normal"
         />
-        <Typography variant="h5" mb={3} mt={4}>
+        <Typography variant="h5" mb={2}>
           Delivery
         </Typography>
         <Grid container spacing={2}>
@@ -74,7 +79,9 @@ const PayForm = () => {
               id="postalCode"
               label="Postal Code"
               variant="outlined"
-              {...register("postalCode", { required: "Postal code is required" })}
+              {...register("postalCode", {
+                required: "Postal code is required",
+              })}
               error={Boolean(errors.postalCode)}
               helperText={errors.postalCode?.message}
             />
@@ -99,6 +106,7 @@ const PayForm = () => {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
+          className="!py-2 !rounded-full !bg-black "
         >
           Check Out
         </Button>

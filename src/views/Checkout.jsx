@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import PayForm from '../components/checkout/PayForm'
-import { CartProvider, useCart } from '../contexts/CartContext';
+import {  useCart } from '../contexts/CartContext';
 
 const Checkout = () => {
   const { cartItems, getCartTotal } = useCart();
@@ -11,7 +11,7 @@ const Checkout = () => {
         <PayForm />
       </div>
       <section className="relative md:sticky md:top-0 bg-slate-200 w-full h-full md:overflow-y-auto">
-        <div className="px-16 py-10 space-y-6 min-[1000px]:fixed bg-slate-200 h-full">
+        <div className="sm:px-16 px-2 py-10 space-y-6 min-[1000px]:fixed bg-slate-200 h-full">
           {cartItems.map((item, index) => (
             <div key={index} className="flex justify-between items-center border-b-[1px] py-2 border-b-stone-400">
               <div className="flex justify-start items-center space-x-4">
@@ -22,7 +22,7 @@ const Checkout = () => {
                 </div>
               </div>
               <div>
-                <h2 className="font-medium text-base max-md:text-sm">{item.product.price * item.quantity} MAD</h2>
+                <h2 className="font-medium text-base max-md:text-sm ml-4">{item.product.price * item.quantity} MAD</h2>
               </div>
             </div>
           ))}
